@@ -199,7 +199,7 @@ systemctl --user restart dsh-web       # 重启
 | `Super+Ctrl+G` | GoLand |
 | `Super+F3` | 文件管理器（pcmanfm） |
 | `Super+T` | 选中文字查词典（goldendict） |
-| `Super+O` | 剪贴板历史（cliphist + rofi） |
+| `Super+O` | 剪贴板历史 |
 | `Super+Shift+P` | 取色器（hyprpicker，自动复制） |
 | `Super+N` | 记事本 scratchpad（rofi 选择，浮动 nvim） |
 | `Super+P` | 区域截图（satty 标注） |

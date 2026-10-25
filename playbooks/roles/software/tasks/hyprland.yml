@@ -8,3 +8,9 @@
   ansible.builtin.copy:
     src: "{{ playbook_dir }}/../assets/colin-watts.jpg"
     dest: "{{ home }}/.config/hypr/wallpaper.jpg"
+
+- name: Deploy clipboard history script
+  ansible.builtin.copy:
+    src: hyprland/clipboard-history.sh
+    dest: "{{ home }}/.local/bin/clipboard-history.sh"
+    mode: "0755"

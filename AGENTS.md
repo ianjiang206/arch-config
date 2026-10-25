@@ -6,6 +6,14 @@ comments are in English. Exception: the `docs/` usage documentation set
 (usage / apps / maintenance / architecture) is written in Chinese. Commit
 messages are in English.
 
+## Documentation
+
+`docs/usage.md` is user-facing Chinese documentation: cover how to use things
+(shortcuts, file locations, observable behavior, known issues) and omit
+implementation details (scripts, IPC, window classes, config paths,
+environment variables). Do not explain behavior that is already intuitive;
+keep the prose terse.
+
 ## Verification
 
 - `cd playbooks && ansible-playbook site.yml --syntax-check` and `ansible-lint`
@@ -52,7 +60,7 @@ messages are in English.
       waybar, wechat, zathura, zed, zsh.
       Each contains only files — no subdirectories mirroring destination
       paths, no hidden structural names; destinations appear only in task
-      `dest:` (dev and hyprland have no files dir; wechat is template-only).
+      `dest:` (dev has no files dir; wechat is template-only).
       Exception: `files/nvim/` keeps its internal tree (deployed wholesale).
       Deleting a software = delete `files/<sw>/` + `tasks/<sw>.yml` + one
       include line in `main.yml`.

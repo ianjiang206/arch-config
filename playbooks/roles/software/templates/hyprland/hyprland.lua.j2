@@ -180,8 +180,13 @@ hl.bind(mod .. " + CTRL + G", hl.dsp.exec_cmd("goland"))
 hl.bind(mod .. " + F3", hl.dsp.exec_cmd("pcmanfm"))
 -- Look up selected text (xsel → wl-paste); -m forces the main window, forwarding to the resident instance
 hl.bind(mod .. " + T", hl.dsp.exec_cmd('goldendict -m "$(wl-paste -p)"'))
--- Clipboard history
-hl.bind(mod .. " + O", hl.dsp.exec_cmd("cliphist list | rofi -dmenu | cliphist decode | wl-copy"))
+-- Clipboard history: pick, copy, then paste into the focused window (the
+-- script injects Ctrl+V, or Ctrl+Shift+V when a terminal has focus)
+hl.bind(
+	mod .. " + O",
+	hl.dsp.exec_cmd("~/.local/bin/clipboard-history.sh"),
+	{ description = "Clipboard history" }
+)
 -- Color picker (-a auto-copies to the clipboard)
 hl.bind(mod .. " + SHIFT + P", hl.dsp.exec_cmd("hyprpicker -a"))
 -- Note scratchpad (scratchpad.sh: rofi picker over ~/.scratchpads, floating kitty+nvim)

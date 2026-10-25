@@ -212,7 +212,7 @@ systemctl --user restart dsh-web       # restart
 | `Super+Ctrl+G` | GoLand |
 | `Super+F3` | File manager (pcmanfm) |
 | `Super+T` | Look up selected text (goldendict) |
-| `Super+O` | Clipboard history (cliphist + rofi) |
+| `Super+O` | Clipboard history |
 | `Super+Shift+P` | Color picker (hyprpicker, auto-copy) |
 | `Super+N` | Note scratchpad (rofi picker, floating nvim) |
 | `Super+P` | Region screenshot (satty annotation) |
