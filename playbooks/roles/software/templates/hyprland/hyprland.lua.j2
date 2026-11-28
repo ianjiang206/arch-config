@@ -489,6 +489,14 @@ hl.window_rule({
 	float = true,
 })
 
+-- Steam client windows (main window, friends list, settings, login) float;
+-- game windows are left tiled
+hl.window_rule({
+	name = "float-steam",
+	match = { class = "^(steam)$" },
+	float = true,
+})
+
 -- Note scratchpad terminal (kitty --class floating-scratchpad, launched by Super+N)
 hl.window_rule({
 	name = "float-scratchpad",
