@@ -174,8 +174,12 @@ systemctl --user restart dsh-web       # restart
    it auto-installs plugins and compiles tree-sitter grammars (needs gcc,
    already in the package list)
 3. **Input method** — fcitx5 autostarts after re-login; rime auto-deploys
-   rime-ice on first run. To keep your old word-frequency data, copy
-   `~/.local/share/fcitx5/rime/*.userdb` from the old system
+   rime-ice on first run. The playbook also downloads WeTypeX's official
+   runtime (accepts Tencent's upstream license) and restarts fcitx5 inside a
+   Wayland session; if the download was skipped, run
+   `fcitx5-wetypex-setup --download --accept-upstream-license`. To keep your
+   old word-frequency data, copy `~/.local/share/fcitx5/rime/*.userdb` from
+   the old system
 4. **zsh** — `~/.zshrc` is a skeleton: core env/history plus a loop that
    sources `~/.config/zsh/conf.d/*.zsh` (15 numbered fragments: aliases,
    zoxide, fzf, atuin, direnv, syntax highlighting, …). It is deployed only

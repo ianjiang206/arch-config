@@ -4,6 +4,13 @@
   failed_when: false
   listen: Reload waybar
 
+# Only inside a Wayland session; a headless/SSH run must not spawn a second daemon
+- name: Restart fcitx5
+  ansible.builtin.command: fcitx5 -r -d
+  when: ansible_env.WAYLAND_DISPLAY is defined
+  failed_when: false
+  listen: Restart fcitx5
+
 - name: Update desktop database
   ansible.builtin.command: "update-desktop-database {{ home }}/.local/share/applications"
   failed_when: false

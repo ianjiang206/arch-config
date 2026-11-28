@@ -110,12 +110,15 @@ OBS 需要在运行中。录像默认存到 `~/`，按时间戳命名。
 
 点击天气模块可以选城市，选择后立即生效。点击时钟打开农历月历，含节日、节气与调休标记；支持按钮、方向键或滚轮翻月，点击某天复制日期。两个弹层都可以按 `Esc`、点击卡片外或再点一次模块关闭。
 
-## 输入法（fcitx5 + rime-ice）
+## 输入法（fcitx5）
 
-- `Ctrl+Space` 切换中英文。默认是英文键盘 + 雾凇拼音；想改键位用 `fcitx5-configtool`。
-- 从中文切到英文时会提交已输入的原始字母，不会选第一个候选词。
+- 两个中文引擎：微信输入法（WeTypeX，第三方适配层，默认）与雾凇拼音（rime-ice）。
+- 微信输入法的官方运行时由 playbook 首次运行时下载（接受腾讯上游许可）；补装可执行 `fcitx5-wetypex-setup --download --accept-upstream-license`，然后重启 fcitx5。
+- `Ctrl+Space` 切换中英文；`fcitx5-configtool` 可改键位和默认引擎。
+- 微信输入法内单独按 `Shift` 也能切换中英文。
+- rime 从中文切到英文时会提交已输入的原始字母，不会选第一个候选词。
 - 主题是 catppuccin-mocha-blue。
-- 用户词库在 `~/.local/share/fcitx5/rime/*.userdb`；换机器时拷过去可保留词频。
+- rime 词库在 `~/.local/share/fcitx5/rime/*.userdb`，换机器拷过去可保留词频；微信输入法的账户、词库与同步状态在 `~/.local/share/fcitx5-wetypex/`。
 
 ## 截图工作流
 

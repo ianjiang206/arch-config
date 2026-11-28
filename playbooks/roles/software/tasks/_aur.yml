@@ -61,6 +61,8 @@
     - opencode-bin
     - herdr-bin
     - kimi-code
+    # === Input method ===
+    - fcitx5-wetypex
     # === IME dictionaries ===
     - rime-ice-git
     # === Dev tools ===

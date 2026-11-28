@@ -437,6 +437,29 @@ hl.window_rule({
 	float = true,
 })
 
+-- WeTypeX (WeChat input method) dialogs; sizes match its upstream rules
+hl.window_rule({
+	name = "float-wetypex-settings",
+	match = { class = "^(fcitx5-wetypex-settings)$" },
+	float = true,
+	size = "715 569",
+	center = true,
+})
+hl.window_rule({
+	name = "float-wetypex-transfer",
+	match = { class = "^(fcitx5-wetypex-transfer)$" },
+	float = true,
+	size = "317 519",
+	center = true,
+})
+hl.window_rule({
+	name = "float-wetypex-ai",
+	match = { class = "^(fcitx5-wetypex-ai)$" },
+	float = true,
+	size = "440 566",
+	center = true,
+})
+
 -- Keep the archive manager engrampa floating; class is org.mate.engrampa on
 -- native Wayland and engrampa under XWayland (no GDK_BACKEND is forced)
 hl.window_rule({

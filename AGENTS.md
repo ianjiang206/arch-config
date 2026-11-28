@@ -140,6 +140,9 @@ keep the prose terse.
   notification). Keep `workspace = "special:..."` out of their window rules:
   pypr shows scratchpads on the active workspace; on special workspaces the
   fcitx5 candidate popup does not render.
+- fcitx5 saves its in-memory input method list on exit; editing
+  `~/.config/fcitx5/profile` while it runs is undone on the next restart. The
+  fcitx5 task stops fcitx5 before deploying the profile and starts it again.
 - `~/.config/git/config` is user-owned — created once (interactive
   user.name/user.email prompt on first run), never overwritten; it includes
   the managed `~/.config/git/custom` (delta + catppuccin).

@@ -9,14 +9,86 @@
     src: fcitx5/rime.conf
     dest: "{{ home }}/.config/fcitx5/conf/rime.conf"
 
-# backup: fcitx5 rewrites the profile when the IM list changes at runtime
+- name: Deploy fcitx5 rime data
+  ansible.builtin.copy:
+    src: fcitx5/default.custom.yaml
+    dest: "{{ home }}/.local/share/fcitx5/rime/default.custom.yaml"
+
+# WeTypeX ships without the proprietary upstream runtime. The first run fetches
+# it from Tencent's service; `--accept-upstream-license` accepts their license.
+- name: Check for the WeTypeX setup command
+  ansible.builtin.stat:
+    path: /usr/bin/fcitx5-wetypex-setup
+  register: wetypex_setup
+
+- name: Prepare the WeTypeX upstream runtime
+  ansible.builtin.command: fcitx5-wetypex-setup --download --accept-upstream-license
+  args:
+    creates: "{{ home }}/.local/share/fcitx5-wetypex/runtime"
+  when: wetypex_setup.stat.exists
+  register: wetypex_runtime
+  failed_when: false
+  notify: Restart fcitx5
+
+- name: Warn when the WeTypeX runtime is not ready
+  ansible.builtin.debug:
+    msg: >-
+      WeTypeX runtime missing; run fcitx5-wetypex-setup --download
+      --accept-upstream-license manually. {{ wetypex_runtime.stderr | default('') | trim }}
+  when:
+    - wetypex_setup.stat.exists
+    - wetypex_runtime.rc | default(0) != 0
+
+# fcitx5 saves its in-memory IM list on exit, so a profile rewrite made while
+# it runs is undone by the next restart. Stop it, deploy, then start it again.
+- name: Check whether the fcitx5 profile changed
+  ansible.builtin.copy:
+    src: fcitx5/profile
+    dest: "{{ home }}/.config/fcitx5/profile"
+  check_mode: true
+  register: fcitx5_profile
+
+- name: Stop fcitx5 before deploying the profile
+  ansible.builtin.command: pkill -x fcitx5
+  when:
+    - fcitx5_profile.changed
+    - ansible_env.WAYLAND_DISPLAY is defined
+  changed_when: false
+  failed_when: false
+
+- name: Wait for fcitx5 to exit
+  ansible.builtin.command: pgrep -x fcitx5
+  register: fcitx5_process
+  until: fcitx5_process.rc != 0
+  retries: 20
+  delay: 1
+  changed_when: false
+  failed_when: false
+  when:
+    - fcitx5_profile.changed
+    - ansible_env.WAYLAND_DISPLAY is defined
+
 - name: Deploy fcitx5 profile
   ansible.builtin.copy:
     src: fcitx5/profile
     dest: "{{ home }}/.config/fcitx5/profile"
     backup: true
+  when:
+    - fcitx5_profile.changed
+    - fcitx5_process.rc | default(1) != 0
 
-- name: Deploy fcitx5 rime data
-  ansible.builtin.copy:
-    src: fcitx5/default.custom.yaml
-    dest: "{{ home }}/.local/share/fcitx5/rime/default.custom.yaml"
+- name: Warn when fcitx5 did not exit
+  ansible.builtin.debug:
+    msg: "fcitx5 is still running; the profile will be deployed on the next run"
+  when:
+    - fcitx5_profile.changed
+    - fcitx5_process.rc | default(1) == 0
+
+- name: Start fcitx5 on the new profile
+  ansible.builtin.command: fcitx5 -d
+  when:
+    - fcitx5_profile.changed
+    - ansible_env.WAYLAND_DISPLAY is defined
+    - fcitx5_process.rc | default(1) != 0
+  changed_when: false
+  failed_when: false

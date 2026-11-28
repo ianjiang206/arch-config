@@ -155,14 +155,14 @@ shell 历史记录（SQLite 存储 + 模糊搜索）。
 
 ### fcitx5
 
-输入法框架，搭配 rime 引擎与雾凇拼音词库。
+输入法框架，搭配两个中文引擎：微信输入法（WeTypeX 第三方适配层）与 rime（雾凇拼音词库）。
 
-- **包**：官方仓库 `fcitx5`、`fcitx5-gtk`、`fcitx5-qt`、`fcitx5-configtool`、`fcitx5-rime`；AUR `rime-ice-git`
+- **包**：官方仓库 `fcitx5`、`fcitx5-gtk`、`fcitx5-qt`、`fcitx5-configtool`、`fcitx5-rime`；AUR `fcitx5-wetypex`、`rime-ice-git`
 - **部署**：
   - `classicui.conf`、`rime.conf` → `~/.config/fcitx5/conf/`
-  - `profile` → `~/.config/fcitx5/profile`（`backup: true`：fcitx5 运行时改动输入法列表会重写它）
+  - `profile` → `~/.config/fcitx5/profile`（`backup: true`：fcitx5 运行时改动输入法列表会重写它；部署前先停 fcitx5，避免它退出时用内存中的列表覆盖）
   - `default.custom.yaml` → `~/.local/share/fcitx5/rime/default.custom.yaml`
-- **要点**：catppuccin 皮肤由 settings 角色部署；日常用法见[日常使用指南](usage.md)。用户词频数据在 `~/.local/share/fcitx5/rime/*.userdb`，换机时可从旧系统拷贝保留。
+- **要点**：catppuccin 皮肤由 settings 角色部署；日常用法见[日常使用指南](usage.md)。rime 词频在 `~/.local/share/fcitx5/rime/*.userdb`，换机时可从旧系统拷贝保留。微信输入法的原版运行时由 playbook 首次运行时通过 `fcitx5-wetypex-setup --download --accept-upstream-license` 下载到用户目录（接受腾讯上游许可），账户、词库与同步状态在 `~/.local/share/fcitx5-wetypex/`。
 
 ## AI 工具
 

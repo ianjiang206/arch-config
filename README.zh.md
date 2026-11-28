@@ -165,7 +165,10 @@ systemctl --user restart dsh-web       # 重启
 2. **neovim** — 配置由 playbook 部署（LazyVim），首次启动自动装插件并编译
    tree-sitter grammar（需 gcc，已在包清单里）
 3. **输入法** — 重新登录后 fcitx5 自启，rime 首次会自动部署雾凇拼音
-   （rime-ice）。想保留旧词频，复制旧系统 `~/.local/share/fcitx5/rime/*.userdb`
+   （rime-ice）。playbook 会同时下载微信输入法（WeTypeX）的官方运行时
+   （接受腾讯上游许可），并在 Wayland 会话里重启 fcitx5；若下载被跳过，
+   手动执行 `fcitx5-wetypex-setup --download --accept-upstream-license`。
+   想保留旧词频，复制旧系统 `~/.local/share/fcitx5/rime/*.userdb`
 4. **zsh** — `~/.zshrc` 是骨架：核心环境变量与历史记录配置，外加一段加载
    `~/.config/zsh/conf.d/*.zsh` 的循环（15 个带编号的片段：别名、zoxide、
    fzf、atuin、direnv、语法高亮等）。它只部署一次（`force: false`）——之后
