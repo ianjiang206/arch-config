@@ -1,4 +1,15 @@
 ---
+# Steam lives in [multilib] and needs 32-bit libs; Arch ships that repo
+# disabled. Enable it before the -Syu so update_cache syncs the new repo.
+- name: Enable the multilib repository
+  become: true
+  ansible.builtin.replace:
+    path: /etc/pacman.conf
+    regexp: '(?m)^#\[multilib\]\r?\n#\s*Include\s*=\s*/etc/pacman\.d/mirrorlist[ \t]*$'
+    replace: |-
+      [multilib]
+      Include = /etc/pacman.d/mirrorlist
+
 # Full -Syu on every run: Arch forbids partial upgrades (installing new
 # packages against a stale system db can break existing binaries).
 # The pacman module rejects name+upgrade in one task, so upgrade first.
@@ -194,3 +205,8 @@
       - winetricks
       - wine-gecko
       - wine-mono
+      # === Gaming ===
+      - steam
+      - vulkan-radeon
+      - lib32-vulkan-radeon
+      - lib32-mesa
